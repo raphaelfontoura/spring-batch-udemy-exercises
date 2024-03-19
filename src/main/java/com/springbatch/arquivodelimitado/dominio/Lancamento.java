@@ -6,6 +6,7 @@ import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 
 public class Lancamento {
     private String descricaoLancamento;
@@ -41,7 +42,20 @@ public class Lancamento {
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         NumberFormat numberFormat = NumberFormat.getCurrencyInstance();
         return "[" + dataLancamento.format(dateFormatter) + "] "
-                + descricaoLancamento + " - R$ "
+                + descricaoLancamento + " - "
                 + numberFormat.format(valorLancamento) + "\n";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Lancamento that = (Lancamento) o;
+        return Objects.equals(descricaoLancamento, that.descricaoLancamento) && Objects.equals(dataLancamento, that.dataLancamento) && Objects.equals(valorLancamento, that.valorLancamento);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(descricaoLancamento, dataLancamento, valorLancamento);
     }
 }

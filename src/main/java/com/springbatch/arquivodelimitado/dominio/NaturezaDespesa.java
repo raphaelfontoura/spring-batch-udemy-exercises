@@ -2,15 +2,21 @@ package com.springbatch.arquivodelimitado.dominio;
 
 import javax.swing.text.NumberFormatter;
 import java.text.NumberFormat;
-import java.util.ArrayList;
-import java.util.Formatter;
-import java.util.List;
+import java.util.*;
 
 public class NaturezaDespesa {
     private Integer codigoNaturezaDespesa;
     private String descricaoNaturezaDespesa;
 
-    private final List<Lancamento> lancamentos = new ArrayList<>();
+    private final Set<Lancamento> lancamentos = new HashSet<>();
+
+    public NaturezaDespesa() {
+    }
+
+    public NaturezaDespesa(DespesaLancamento despesaLancamento) {
+        this.codigoNaturezaDespesa = despesaLancamento.getCodigoNaturezaDespesa();
+        this.descricaoNaturezaDespesa = despesaLancamento.getDescricaoNaturezaDespesa();
+    }
 
     public Integer getCodigoNaturezaDespesa() {
         return codigoNaturezaDespesa;
@@ -28,7 +34,7 @@ public class NaturezaDespesa {
         this.descricaoNaturezaDespesa = descricaoNaturezaDespesa;
     }
 
-    public List<Lancamento> getLancamentos() {
+    public Set<Lancamento> getLancamentos() {
         return lancamentos;
     }
 
@@ -42,8 +48,21 @@ public class NaturezaDespesa {
     public String toString() {
         NumberFormat formatter = NumberFormat.getCurrencyInstance();
         return "[" + codigoNaturezaDespesa + "] "
-                + descricaoNaturezaDespesa + " - R$ " + formatter.format(getTotalLancamentos())
+                + descricaoNaturezaDespesa + " - " + formatter.format(getTotalLancamentos())
                 + "\n"
                 + lancamentos;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        NaturezaDespesa that = (NaturezaDespesa) o;
+        return Objects.equals(codigoNaturezaDespesa, that.codigoNaturezaDespesa);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(codigoNaturezaDespesa);
     }
 }
