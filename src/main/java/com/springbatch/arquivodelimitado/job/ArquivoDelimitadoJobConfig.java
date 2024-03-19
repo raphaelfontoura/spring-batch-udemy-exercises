@@ -23,4 +23,13 @@ public class ArquivoDelimitadoJobConfig {
 				.incrementer(new RunIdIncrementer())
 				.build();
 	}
+
+	@Bean
+	public Job demonstrativoOrcamentarioJob(Step leituraLancamentosStep) {
+		return jobBuilderFactory
+				.get("demonstrativoOrcamentarioJob")
+				.start(leituraLancamentosStep)
+				.incrementer(new RunIdIncrementer())
+				.build();
+	}
 }
