@@ -3,7 +3,9 @@ package com.springbatch.arquivodelimitado.reader;
 import com.springbatch.arquivodelimitado.dominio.Cliente;
 import com.springbatch.arquivodelimitado.dominio.DespesaLancamento;
 import org.springframework.batch.core.configuration.annotation.StepScope;
+import org.springframework.batch.item.*;
 import org.springframework.batch.item.file.FlatFileItemReader;
+import org.springframework.batch.item.file.ResourceAwareItemReaderItemStream;
 import org.springframework.batch.item.file.builder.FlatFileItemReaderBuilder;
 import org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,7 +20,7 @@ public class LeituraLancamentoDelimitadoReaderConfig {
 	@StepScope
 	@Bean
 	public FlatFileItemReader<DespesaLancamento> leituraLancamentoDelimitadoReader(
-			@Value("#{jobParameters['lancamentos']}")Resource lancamentos
+			@Value("#{jobParameters['arquivoLancamentos']}")Resource lancamentos
 	) {
 		return new FlatFileItemReaderBuilder<DespesaLancamento>()
 				.name("leituraLancamentoDelimitadoReader")
@@ -33,4 +35,5 @@ public class LeituraLancamentoDelimitadoReaderConfig {
 				.targetType(DespesaLancamento.class)
 				.build();
     }
+
 }
